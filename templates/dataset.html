@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f6f8f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 85%;
+      margin: 5vh auto;
+      padding: 2vh;
+    }
+
+    h2 {
+      font-size: 3.2vh;
+      margin-bottom: 2vh;
+      color: #222;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 2.5vh 3.5vh;
+      margin-bottom: 4vh;
+      line-height: 1.7;
+    }
+
+    .card p {
+      font-size: 2.1vh;
+      margin: 1vh 0;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #0077cc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 2vh;
+      text-align: left;
+      vertical-align: top;
+      font-size: 1.9vh;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: #0077cc;
+      color: white;
+      font-size: 2vh;
+    }
+
+    td code {
+      background-color: #eef6fb;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        width: 95%;
+        padding: 1vh;
+      }
+
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        background: #0077cc;
+        color: white;
+      }
+
+      td {
+        margin-bottom: 1.2vh;
+        padding: 1.5vh;
+        border-bottom: 1px solid #eaeaea;
+      }
+    }
+
+    .right {
+      border-left: 1px solid #e0e0e0;
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+  {% include "navbar.html" %}
+
+  <div class="container">
+    <h2>Tổng quan về các dữ liệu được sử dụng bởi <span class="highlight">CheckLLM</span></h2>
+
+    <div class="card">
+      <p><span class="highlight">Mô tả:</span> Bộ dữ liệu của <strong>CheckLLM</strong> được xây dựng tỉ mỉ từ hơn 8 triệu câu văn phong phú từ 2 ngôn ngữ Anh-Việt, được thu thập từ những nguồn uy tín và đồ sộ như Wikipedia, ChatGPT, Gemini, StackOverflow, GitHub… Tất cả đều được xử lý kỹ lưỡng qua nhiều lớp lọc để đảm bảo độ chính xác, tự nhiên và sát với thực tế.</p>
+      <p>Điểm đặc biệt là dữ liệu được chia <strong>50/50</strong> giữa hai nhãn <code>Human</code> và <code>AI</code>. Những văn bản gắn nhãn <code>Human</code> là do con người tạo ra (trước năm 2022 – thời điểm ChatGPT ra đời và đánh dấu kỷ nguyên AI bùng nổ). Trong khi đó, các văn bản mang nhãn <code>AI</code> được sinh ra bởi các mô hình ngôn ngữ tiên tiến như ChatGPT, Gemini và các công cụ trí tuệ nhân tạo hàng đầu hiện nay.</p>
+      <p>Với sự đa dạng về nội dung và nguồn gốc, bộ dữ liệu này không chỉ giúp huấn luyện mô hình phân biệt AI/human một cách hiệu quả mà còn phản ánh được phong cách viết tự nhiên của từng đối tượng, từ đó mở ra tiềm năng lớn trong việc đánh giá và phát hiện nội dung do AI tạo ra.</p>
+    </div>
+
+    <h2>Một vài dữ liệu mẫu được sử dụng:</h2>
+
+    <table>
+      <tr>
+        <th>Văn bản</th>
+        <th class="right">Nhãn</th>
+      </tr>
+
+      <tr>
+        <td>Lịch sử Việt Nam được bắt đầu cách đây hơn 3000 đến 4000 năm. Khu vực Việt Nam đã có con người sinh sống từ thời kỳ Đồ đá cũ. Đến khoảng 1200 TCN, sự phát triển của kỹ thuật trồng lúa nước và đúc đồng trong khu vực sông Mã và đồng bằng sông Hồng đã dẫn đến sự phát triển của nền văn hóa Đông Sơn, nổi bật với các trống đồng. Các tộc người Việt cổ lập quốc đầu tiên ở miền Lĩnh Nam, bao gồm một vùng rộng lớn phía nam sông Trường Giang của Trung Quốc hiện nay đến vùng đồng bằng sông Hồng, sông Mã ở miền bắc Việt Nam.</td>
+        <td class="right">Human</td>
+      </tr>
+
+      <tr>
+        <td>Nguyễn Huệ (1753–1792), còn được biết đến là Quang Trung Hoàng đế, vua Quang Trung hay Bắc Bình Vương, là vị hoàng đế thứ hai của nhà Tây Sơn sau Thái Đức Hoàng đế Nguyễn Nhạc. Ông là một trong những chỉ huy quân sự tài giỏi nhất trong lịch sử Việt Nam với những trận đánh trong nội chiến và chống ngoại xâm chưa thất bại lần nào. Thành tựu của ông để lại có ý nghĩa rất lớn trong lịch sử Việt Nam, gián tiếp giúp cho Nguyễn Ánh dễ dàng thống nhất đất nước sau hơn hai trăm năm nội chiến.</td>
+        <td class="right">Human</td>
+      </tr>
+
+      <tr>
+        <td>Nguyễn Thị Phương Thảo (sinh ngày 25 tháng 6 năm 1970) là một nữ doanh nhân Việt Nam, hiện là Tổng giám đốc của VietJet Air, hãng hàng không tư nhân đầu tiên tại Việt Nam. Bà được biết đến là người phụ nữ giàu nhất Việt Nam và là một trong những người phụ nữ quyền lực nhất châu Á.</td>
+        <td class="right">AI</td>
+      </tr>
+      <tr>
+        <td>Vua Quang Trung, tên thật là Nguyễn Huệ (1753–1792), còn có tên là Hồ Thơm và Nguyễn Quang Bình. Ông là hoàng đế thứ hai của triều Tây Sơn, trị vì từ năm 1788 đến 1792
+          <p>Sinh ra ở Tây Sơn, Bình Định, quê gốc ở Nghệ An. Ban đầu mang họ Hồ, sau đổi sang họ Nguyễn khi mẹ ông là Nguyễn Thị Đồng.</pp>
+        </td>
+        <td class="right">AI</td>
+      </tr>
+      <tr>
+        <td>Python cho phép chia chương trình thành modules để có thể sử dụng lại trong các chương trình khác. Nó cũng có sẵn một tập hợp các modules chuẩn mà ta có thể sử dụng lại trong chương trình của ta. Các thư viện này cung cấp nhiều thứ, như file I/O, các lời gọi hệ thống, sockets,…Trong phần này chúng ta sẽ tìm hiểu các kỹ thuật, đặc điểm của các module.</td>
+        <td class="right">Human</td>
+      </tr>
+      <tr>
+        <td>Python là một ngôn ngữ lập trình bậc cao, hướng đối tượng, thông dịch và tương tác. Nó được phát triển bởi Guido van Rossum và lần đầu tiên được phát hành vào năm 1991. Python được thiết kế với mục tiêu đơn giản hóa việc lập trình, giúp người dùng dễ dàng đọc và viết mã.</td>
+        <td class="right">AI</td>
+      </tr>
+      <tr>
+        <td>Python là một ngôn ngữ lập trình mạnh mẽ, dễ học và được sử dụng rất rộng rãi trên thế giới.
+<p>🔍 Tổng quan về Python:</p>
+<p>Ngôn ngữ lập trình bậc cao, được thiết kế với cú pháp rõ ràng, dễ đọc.</p>
+<p>Tạo bởi Guido van Rossum vào năm 1991.</p></td>
+        <td class="right">AI</td>
+      </tr>
+
+      <tr>
+        <td>Cao Cao courtesy name Mengde, was a Chinese statesman, warlord, and poet who rose to power during the end of the Han dynasty (c. 184–220), ultimately taking effective control of the Han central government. He laid the foundation for the state of Cao Wei (220–265), established by his son and successor Cao Pi, who ended the Eastern Han dynasty and inaugurated the Three Kingdoms period (220–280). Beginning in his own lifetime, a corpus of legends developed around Cao Cao which built upon his talent, his cruelty, and his perceived eccentricities.</td>
+        <td class="right">Human</td>
+      </tr>
+
+      <tr>
+        <td>World War I was a global conflict primarily fought in Europe between July 28, 1914, and November 11, 1918. It involved many of the world's major powers, which were divided into two main alliances:
+<p>Allied Powers: France, the United Kingdom, Russia (until 1917), Italy (from 1915), the United States (from 1917), and others.</p>
+<p>Central Powers: Germany, Austria-Hungary, the Ottoman Empire, and Bulgaria.</p></td>
+        <td class="right">AI</td>
+      </tr>
+
+      <tr>
+        <td>World War II was a global conflict that lasted from 1939 to 1945, involving most of the world's nations. It was the deadliest and most widespread war in history, with an estimated 70-85 million casualties. The war was fought between two major alliances:
+<p>Allied Powers: The main Allied Powers included the United States, the Soviet Union, the United Kingdom, China, and France.</p>
+<p>Axis Powers: The main Axis Powers were Germany, Italy, and Japan.</p>
+      </td>
+        <td class="right">AI</td>
+      </tr>
+
+      <tr>
+        <td>.....</td>
+        <td class="right">.....</td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

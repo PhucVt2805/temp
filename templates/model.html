@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f6f8f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 80%;
+      margin: 5vh auto;
+      padding: 2vh;
+    }
+
+    h2 {
+      font-size: 3vh;
+      margin-bottom: 2vh;
+      color: #222;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      padding: 2vh 3vh;
+      margin-bottom: 3vh;
+    }
+
+    .card a {
+      font-size: 2.5vh;
+      margin-bottom: 1vh;
+      color: #005c99;
+      text-decoration: none;
+    }
+
+    .card p {
+      font-size: 1.9vh;
+      line-height: 1.6;
+      margin: 0.8vh 0;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #0077cc;
+    }
+
+    ul {
+      padding-left: 1.5vh;
+    }
+  </style>
+</head>
+<body>
+
+  {% include "navbar.html" %}
+
+  <div class="container">
+    <h2>Tổng quan về các mô hình được sử dụng bởi <span class="highlight">CheckLLM</span></h2>
+
+    <div class="card">
+      <a href="https://huggingface.co/distilbert/distilbert-base-multilingual-cased">1. DistilBERT (Multilingual, Cased)</a>
+      <p><span class="highlight">Mô tả:</span> Phiên bản rút gọn của BERT hỗ trợ 104 ngôn ngữ. Phân biệt chữ hoa chữ thường (ví dụ: "Tiếng Anh" ≠ "tiếng anh").</p>
+      <p><span class="highlight">Thông số:</span> 6 lớp, 768 chiều, ~134 triệu tham số (so với 177M của mBERT-base).</p>
+      <p><span class="highlight">Ưu điểm:</span> Nhanh gấp đôi mBERT với độ chính xác tương đương.</p>
+      <p><span class="highlight">Phát triển bởi:</span> Victor Sanh, Lysandre Debut, Julien Chaumond, Thomas Wolf (Hugging Face)</p>
+      <p><span class="highlight">Ngôn ngữ hỗ trợ:</span> 104 ngôn ngữ bao gồm: Tiếng Việt, Anh, Trung, Pháp, Nhật, Hàn, Đức,...</p>
+      <p><span class="highlight">Fine-tuning:</span> Được fine-tune cho tác vụ Phân loại văn bản LLM với hơn 100 giờ huấn luyện trên GPU A100 40GB </p>
+    </div>
+
+    <div class="card">
+      <a href="https://huggingface.co/huawei-noah/TinyBERT_General_4L_312D">2. TinyBERT</a>
+      <p><span class="highlight">Mô tả:</span> Mô hình cực nhẹ được nén từ BERT-base thông qua kỹ thuật "Knowledge Distillation".</p>
+      <p><span class="highlight">Thông số:</span> 4–6 lớp, 768 chiều, ~14.5 triệu tham số.</p>
+      <p><span class="highlight">Ưu điểm:</span> Kích thước nhỏ, tốc độ nhanh, vẫn giữ hiệu suất chấp nhận được.</p>
+      <p><span class="highlight">Phát triển bởi:</span> Huawei Noah’s Ark Lab</p>
+      <p><span class="highlight">Ngôn ngữ hỗ trợ:</span> Chủ yếu tiếng Anh, nhưng vẫn hỗ trợ đa ngôn ngữ.</p>
+      <p><span class="highlight">Fine-tuning:</span> Được fine-tune cho tác vụ Phân loại văn bản LLM với hơn 11 giờ huấn luyện trên GPU A100 40GB </p>
+    </div>
+
+    <div class="card">
+      <a href="https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2">3. MiniLM-L6</a>
+      <p><span class="highlight">Mô tả:</span> Mô hình nhẹ với cấu trúc Transformer tối ưu hóa dành cho tốc độ inference nhanh mà vẫn đảm bảo độ chính xác cao.</p>
+      <p><span class="highlight">Thông số:</span> 6 lớp, 384 chiều, ~22 triệu tham số.</p>
+      <p><span class="highlight">Ưu điểm:</span> Thích hợp cho ứng dụng real-time và thiết bị tài nguyên hạn chế.</p>
+      <p><span class="highlight">Phát triển bởi:</span> Microsoft Research</p>
+      <p><span class="highlight">Ngôn ngữ hỗ trợ:</span> Đa ngôn ngữ, có bản cased & uncased.</p>
+      <p><span class="highlight">Fine-tuning:</span> Được fine-tune cho tác vụ Phân loại văn bản LLM với hơn 16 giờ huấn luyện trên GPU A100 40GB </p>
+    </div>
+
+  </div>
+</body>
+</html>

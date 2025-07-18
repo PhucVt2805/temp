@@ -1,0 +1,70 @@
+<div class="navbar" style="height: {{ navbar_height }};">
+  <style>
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 {{ horizontal_padding }};
+      background-color: #d5d5d5;
+      border-bottom: 0.1vh solid #eee;
+      font-family: Arial, sans-serif;
+      font-size: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 2em;
+    }
+
+    .logo-icon {
+      height: 2em;
+      margin-right: 0.5em;
+      vertical-align: middle;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 5vw;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #00703c;
+    }
+
+    .nav-right a {
+      text-decoration: none;
+      background-color: #00703c;
+      color: white;
+      padding: 0.6em 1.2em;
+      border-radius: {{ button_radius }};
+      font-weight: bold;
+      font-size: 1em;
+    }
+
+    .nav-right a:hover {
+      background-color: #005e33;
+    }
+  </style>
+
+  <div class="logo">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo-icon" /> <a href="/" style="text-decoration: none;">CheckLLM</a>
+  </div>
+
+  <div class="nav-links">
+    <a href="/model">Những mô hình hiện tại</a>
+    <a href="/dataset">Bộ dữ liệu sử dụng</a>
+  </div>
+
+  <div class="nav-right">
+    <a href="#">Tác giả</a>
+  </div>
+</div>

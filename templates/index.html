@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ title }}</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      background: #f6f8f9;
+    }
+
+    .container {
+      display: flex;
+      margin: 5vh auto;
+      width: 80%;
+    }
+
+    .spacer {
+      width: 5%;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    .model-panel {
+      width: 25%;
+      margin-right: 5%;
+      padding: 0vh 2vh 2vh 2vh;
+    }
+
+    .text-panel {
+      width: 68%;
+    }
+
+    .panel h3 {
+      margin-top: 3vh;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .options {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .options label {
+      font-size: 15px;
+      color: #444;
+    }
+
+    .textarea-input {
+      width: 100%;
+      height: 200px;
+      resize: none;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 15px;
+      box-sizing: border-box;
+      margin: 16px 0;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .char-count {
+      font-size: 13px;
+      color: #777;
+    }
+
+    .scan-button {
+      background-color: #111;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 24px;
+      font-size: 15px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .scan-button:hover {
+      background-color: #000;
+    }
+
+    .top-content {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 12px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-green {
+      background: #d9f3eb;
+      color: #00703c;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 20vw;
+      height: 20vh;
+      background-color: rgba(255, 0, 0, 0.5);
+      border-radius: 1vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content p {
+      color: white;
+      font-size: 2vh;
+      margin: 0;
+      text-align: center;
+    }
+
+    .close {
+      position: absolute;
+      top: 1vh;
+      right: 1vw;
+      font-size: 3vh;
+      color: white;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="errorModal" class="modal", style="display: none;">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+        <p id="errorMsg"></p>
+    </div>
+  </div>
+
+  {% include "navbar.html" %}
+
+  <div class="container">
+    <div class="model-panel panel">
+      <h3>Chọn mô hình sẽ sử dụng</h3>
+      <div class="options">
+        <label><input type="checkbox" name="model" value="Distilbert"> Distilbert </label>
+        <label><input type="checkbox" name="model" value="TinyBERT"> TinyBERT </label>
+        <label><input type="checkbox" name="model" value="MiniLM-L6"> MiniLM-L6</label>
+      </div>
+
+      <h3>Chọn chế độ kiểm tra</h3>
+      <div class="options" >
+        <select name="mode" id="mode", style="width: 50%;">
+          <option value="Sentence"> Từng câu</option>
+          <option value="All"> Toàn bộ</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="text-panel panel">
+      <div class="top-content">
+        <p class="btn btn-green">🕵️ Kiểm tra văn bản</p>
+      </div>
+
+      <textarea class="textarea-input" placeholder="Nhập văn bản..." id="inputText"></textarea>
+
+      <div class="action-row">
+        <div class="char-count" id="charCount">Vui lòng nhập văn bản lớn hơn 50 kí tự</div>
+        <button class="scan-button">🔍 Kiểm tra →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const input = document.getElementById('inputText');
+    const count = document.getElementById('charCount');
+    const button = document.querySelector('.scan-button');
+    const modal = document.getElementById('errorModal');
+    const closeBtn = document.getElementById('closeModal');
+    const errorMsg = document.getElementById('errorMsg');
+
+    input.addEventListener('input', () => {
+      count.textContent = `Hiện tại: ${input.value.length} ký tự`;
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', e => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+
+    button.addEventListener('click', () => {
+      const text = input.value.trim();
+      const models = Array.from(document.querySelectorAll('input[name="model"]:checked'))
+                          .map(el => el.value);
+      const mode = document.querySelector('select[name="mode"]').value;
+
+      let error = '';
+      if (models.length === 0) error = 'Bạn chưa chọn model nào.';
+      else if (!text) error = 'Vui lòng nhập văn bản.';
+      else if (text.length < 50) error = 'Vui lòng nhập văn bản lớn hơn 50 kí tự.';
+
+      if (error) {
+        errorMsg.textContent = error;
+        modal.style.display = 'flex';
+        return;
+      }
+
+      const payload = { next: 'result', model: models, text: text, mode: mode };
+      fetch('/process', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Lỗi khi gửi dữ liệu đến server');
+        return res.json();
+      })
+      .then(data => {
+        console.log(data);
+        window.location.href = '/result';
+      })
+      .catch(err => {
+        console.error(err);
+        errorMsg.textContent = 'Đã xảy ra lỗi khi gửi dữ liệu.';
+        modal.style.display = 'flex';
+      });
+    });
+
+  </script>
+</body>
+</html>
