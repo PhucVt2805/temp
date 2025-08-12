@@ -1,5 +1,5 @@
 import asyncio
-from utils import list_directories, split_sentence
+from utils import split_sentence
 from inference import ensemble_predict
 from flask import Flask, render_template, request, jsonify, session
 
@@ -10,7 +10,7 @@ def predict(models=[], text=''):
     base_model_names = []
     model_dirs = []
     model = ['distilbert/distilbert-base-multilingual-cased', 'huawei-noah/TinyBERT_General_4L_312D', 'sentence-transformers/all-MiniLM-L6-v2']
-    dirs = ['results/'+f for f in list_directories('results')]
+    dirs = dirs = ['results/'+ f for f in ['distilbert_distilbert-base-multilingual-cased', 'huawei-noah_TinyBERT_General_4L_312D', 'sentence-transformers_all-MiniLM-L6-v2']]
     if 'Distilbert' in models:
         base_model_names.append(model[0])
         model_dirs.append(dirs[0])
@@ -20,7 +20,7 @@ def predict(models=[], text=''):
     if 'MiniLM-L6' in models:
         base_model_names.append(model[2])
         model_dirs.append(dirs[2])
-
+    print(f"Selected models: {base_model_names}, Directories: {model_dirs}")
     text_dict = asyncio.run(split_sentence(text))
 
     predictions, avg_probabilities = ensemble_predict(
@@ -52,7 +52,7 @@ def process_text():
 
     session['selected_models'] = data.get('model')
     session['input_text'] = data.get('text')
-    session['mode'] = 'Toàn bộ văn bản' if data.get('mode') == 'All' else 'Từng câu'
+    session['mode'] = 'Toàn bộ văn bản' if data.get('mode') == 'All' else 'Từng đoạn'
 
     print(data)
 

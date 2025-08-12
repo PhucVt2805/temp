@@ -24,13 +24,6 @@ def check_compute_dtype():
         compute_dtype = torch.float32
     return compute_dtype
 
-def list_directories(path):
-    directories = []
-    for item in os.listdir(path):
-        if os.path.isdir(os.path.join(path, item)):
-            directories.append(item)
-    return directories
-
 async def split_sentence(text: str, max_length: int = 496) -> list[str]:
     try:
         lang = detect(text)
